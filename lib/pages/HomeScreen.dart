@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:http/http.dart' as http;
 
 import 'package:carousel_slider/carousel_slider.dart';
 // import 'package:flutter/foundation.dart';
@@ -13,6 +14,8 @@ import 'package:stokey_fe/pages/Stokey.dart';
 import 'package:stokey_fe/pages/TrcakOrder.dart';
 import 'package:stokey_fe/pages/cart.dart';
 import 'package:stokey_fe/pages/coupons.dart';
+import 'package:stokey_fe/pages/httpservice.dart';
+// import 'package:stokey_fe/pages/httpservice.dart';
 import 'package:stokey_fe/pages/location.dart';
 import 'package:stokey_fe/pages/nearbyshops.dart';
 import 'package:stokey_fe/pages/product.dart';
@@ -27,6 +30,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  Future<http.Response> fetchAlbum() {
+  return http.get(Uri.parse('https://stokey.shop/api/merchants/all'));
+}
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -1833,6 +1839,41 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
+    );
+  }
+  FutureBuilder<List<User>> _buildBody(BuildContext context) {
+    final HttpService httpService = HttpService();
+    return FutureBuilder<List<User>>(
+ 
+      future: httpService.getPosts(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          final List<User> posts = snapshot.data;
+          return _buildPosts(context, posts);
+        } else {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
+    );
+  }
+  ListView _buildPosts(BuildContext context, List<User> posts) {
+    return ListView.builder(
+      itemCount: posts.length,
+      padding: EdgeInsets.all(8),
+      itemBuilder: (context, index) {
+        return Card(
+          elevation: 4,
+          child: ListTile(
+            title: Text(
+              posts[index].shop_title,
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            subtitle: Text(posts[index].name.toString()),
+          ),
+        );
+      },
     );
   }
 }
