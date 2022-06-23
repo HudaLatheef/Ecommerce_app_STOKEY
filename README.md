@@ -1,4 +1,4 @@
-# stokey Ecommerce app
+# stokey Ecommerce app UI using flutter
 
 An Ecommerce app platform for retailers to sell their proucts online.
 
@@ -14,3 +14,4 @@ An Ecommerce app platform for retailers to sell their proucts online.
 ![pp2](https://user-images.githubusercontent.com/90184414/175294062-320b4fc5-5973-4481-82ef-b95be045896f.png)
 [stokey_app.pdf](https://github.com/HudaLatheef/Ecommerce_app_STOKEY/files/8966965/stokey_app.pdf)
 
+## Modules
